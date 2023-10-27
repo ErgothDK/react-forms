@@ -6,43 +6,35 @@ import {
   hasMinLength,
   isEqualsToOtherValue,
 } from "../util/validation.js";
+import { useInput } from "../hooks/useInput.js";
 
 export default function Login() {
-  const [userInput, setUserInput] = useState({
-    email: "",
-    password: "",
+  const {
+    value: email,
+    changeHandler: inputEmailHandler,
+    blurHandler: inputEmailBlurHandler,
+    hasError: emailHasError,
+  } = useInput("", (value) => {
+    return isNotEmpty(value) && isEmail(value);
   });
 
-  const [isEdit, setIsEdit] = useState({
-    email: false,
-    password: false,
+  const {
+    value: password,
+    changeHandler: inputPasswordHandler,
+    blurHandler: inputPasswordBlurHandler,
+    hasError: passwordHasError,
+  } = useInput("", (value) => {
+    return hasMinLength(value, 6);
   });
-
-  const emailIsInvalid =
-    isEdit.email && (!isNotEmpty(userInput.email) || !isEmail(userInput.email));
-  const passwordIsInvalid =
-    isEdit.password && !hasMinLength(userInput.password, 6);
-
-  console.log(emailIsInvalid, passwordIsInvalid);
 
   function submitHandler(e) {
     e.preventDefault();
-    console.log(emailIsInvalid);
+
+    if (emailHasError || passwordHasError) return;
+
+    console.log(email, password);
   }
 
-  function inputHandler(e) {
-    setUserInput((prevState) => ({
-      ...prevState,
-      [e.target.id]: e.target.value,
-    }));
-  }
-
-  function inputBlurHandler(e) {
-    setIsEdit((prevState) => ({
-      ...prevState,
-      [e.target.id]: true,
-    }));
-  }
   return (
     <form onSubmit={submitHandler}>
       <h2>Login</h2>
@@ -53,10 +45,10 @@ export default function Login() {
           label="Email"
           type="email"
           name="email"
-          onChange={inputHandler}
-          onBlur={inputBlurHandler}
-          value={userInput.email}
-          error={emailIsInvalid && "Email is not valid"}
+          onChange={inputEmailHandler}
+          onBlur={inputEmailBlurHandler}
+          value={email}
+          error={emailHasError && "Email is not valid"}
           required
         />
 
@@ -65,11 +57,11 @@ export default function Login() {
           label="Password"
           type="password"
           name="password"
-          onChange={inputHandler}
-          onBlur={inputBlurHandler}
-          value={userInput.password}
+          onChange={inputPasswordHandler}
+          onBlur={inputPasswordBlurHandler}
+          value={password}
           error={
-            passwordIsInvalid && "Password must be at least 6 characters long"
+            passwordHasError && "Password must be at least 6 characters long"
           }
           required
         />
