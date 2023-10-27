@@ -9,8 +9,8 @@ const Input = ({ ...props }) => {
         type={props.type ?? "text"}
         name={props.name}
         onChange={props.onChange}
+        onBlur={props.onBlur}
         value={props.value}
-        {...props}
       />
       <div className="control-error">{props.error && <p>{props.error}</p>}</div>
     </div>
