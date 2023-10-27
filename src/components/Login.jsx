@@ -1,4 +1,5 @@
 import { useState, useRef } from "react";
+import Input from "./UI/Input.jsx";
 
 export default function Login() {
   const [userInput, setUserInput] = useState({
@@ -22,33 +23,31 @@ export default function Login() {
       <h2>Login</h2>
 
       <div className="control-row">
-        <div className="control no-margin">
-          <label htmlFor="email">Email</label>
-          <input
-            id="email"
-            type="email"
-            name="email"
-            onChange={inputHandler}
-            value={userInput.email}
-            required
-          />
-        </div>
+        <Input
+          id="email"
+          label="Email"
+          type="email"
+          name="email"
+          onChange={inputHandler}
+          value={userInput.email}
+          required
+        />
 
-        <div className="control no-margin">
-          <label htmlFor="password">Password</label>
-          <input
-            id="password"
-            type="password"
-            name="password"
-            onChange={inputHandler}
-            value={userInput.password}
-            required
-          />
-        </div>
+        <Input
+          id="password"
+          label="Password"
+          type="password"
+          name="password"
+          onChange={inputHandler}
+          value={userInput.password}
+          required
+        />
       </div>
 
       <p className="form-actions">
-        <button className="button button-flat">Reset</button>
+        <button type="reset" className="button button-flat">
+          Reset
+        </button>
         <button className="button">Login</button>
       </p>
     </form>
