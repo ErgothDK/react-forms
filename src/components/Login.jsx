@@ -30,6 +30,7 @@ export default function Login() {
             name="email"
             onChange={inputHandler}
             value={userInput.email}
+            required
           />
         </div>
 
@@ -41,6 +42,7 @@ export default function Login() {
             name="password"
             onChange={inputHandler}
             value={userInput.password}
+            required
           />
         </div>
       </div>
